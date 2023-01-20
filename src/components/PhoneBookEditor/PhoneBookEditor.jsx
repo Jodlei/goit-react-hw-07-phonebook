@@ -22,7 +22,7 @@ export const PhoneBookEditor = () => {
     if (
       contacts.map(item => item.name.toLowerCase()).includes(name.toLowerCase())
     ) {
-      alert(name + 'is already in contacts');
+      alert(name + 'is already in contacts!');
     } else {
       dispatch(addContact({ name, phone }));
     }
