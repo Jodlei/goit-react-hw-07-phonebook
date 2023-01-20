@@ -2,10 +2,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/operations';
 import {
   getContacts,
-  // getError,
-  // getIsLoading,
+  getError,
+  getIsLoading,
   getContactsFilter,
 } from 'redux/selectors';
+
+import { Loader } from 'components/Loader/Loader';
 
 import {
   ContactList,
@@ -20,8 +22,8 @@ export const ContactsList = () => {
 
   const contacts = useSelector(getContacts);
   const filterValue = useSelector(getContactsFilter);
-  // const isLoading = useSelector(getIsLoading);
-  // const error = useSelector(getError);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
   const getVisibleContacts = () => {
     return contacts.filter(({ name }) =>
@@ -34,21 +36,26 @@ export const ContactsList = () => {
   };
 
   const visibleContacts = getVisibleContacts();
-  console.log(contacts);
 
   return (
-    <ContactList>
-      {visibleContacts.map(({ id, name, number }) => {
-        return (
-          <ContactItem key={id}>
-            <NameValue>{name}</NameValue>
-            <PhoneValue>{number}</PhoneValue>
-            <DeleteButton type="button" onClick={() => handleDelete(id)}>
-              Delete contact
-            </DeleteButton>
-          </ContactItem>
-        );
-      })}
-    </ContactList>
+    <>
+      {error && <p>Sorry try again later</p>}
+      {isLoading && <Loader />}
+      {!isLoading && !error && (
+        <ContactList>
+          {visibleContacts.map(({ id, name, number }) => {
+            return (
+              <ContactItem key={id}>
+                <NameValue>{name}</NameValue>
+                <PhoneValue>{number}</PhoneValue>
+                <DeleteButton type="button" onClick={() => handleDelete(id)}>
+                  Delete contact
+                </DeleteButton>
+              </ContactItem>
+            );
+          })}
+        </ContactList>
+      )}
+    </>
   );
 };

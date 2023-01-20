@@ -13,8 +13,6 @@ export const PhoneBookEditor = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
-  console.log(contacts);
-
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
