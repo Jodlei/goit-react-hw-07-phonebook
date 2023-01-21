@@ -39,15 +39,15 @@ export const ContactsList = () => {
 
   return (
     <>
-      {error && <p>Sorry try again later</p>}
+      {error && <p>Try again later</p>}
       {isLoading && <Loader />}
       {!isLoading && !error && (
         <ContactList>
-          {visibleContacts.map(({ id, name, number }) => {
+          {visibleContacts.map(({ id, name, phone }) => {
             return (
               <ContactItem key={id}>
                 <NameValue>{name}</NameValue>
-                <PhoneValue>{number}</PhoneValue>
+                <PhoneValue>{phone}</PhoneValue>
                 <DeleteButton type="button" onClick={() => handleDelete(id)}>
                   Delete contact
                 </DeleteButton>

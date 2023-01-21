@@ -23,24 +23,22 @@ const contactsSlice = createSlice({
     [addContact.pending]: handlePending,
     [deleteContact.pending]: handlePending,
 
-    [fetchContacts.fulfilled](state, action) {
+    [fetchContacts.fulfilled](state, { payload }) {
       state.isLoading = false;
       state.error = null;
-      state.items = action.payload;
+      state.items = payload;
     },
 
-    [addContact.fulfilled](state, action) {
+    [addContact.fulfilled](state, { payload }) {
       state.isLoading = false;
       state.error = null;
-      state.items.push(action.payload);
+      state.items.push(payload);
     },
 
-    [deleteContact.fulfilled](state, action) {
+    [deleteContact.fulfilled](state, { payload }) {
       state.isLoading = false;
       state.error = null;
-      const index = state.items.findIndex(
-        task => task.id === action.payload.id
-      );
+      const index = state.items.findIndex(task => task.id === payload.id);
       state.items.splice(index, 1);
     },
 
@@ -51,29 +49,3 @@ const contactsSlice = createSlice({
 });
 
 export const contactsReducer = contactsSlice.reducer;
-
-// {
-//     [fetchContacts.pending]:handlePending,
-//     [fetchContacts.fulfilled](state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//       state.items = action.payload;
-//     },
-//     [fetchContacts.rejected] : handleRejected,
-//     [addContact.pending]: handlePending,
-//     [addContact.fulfilled](state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//       state.items.push(action.payload.data);
-//     },
-//     [addContact.rejected]: handleRejected,
-//      [deleteContact.pending]: handlePending,
-//       [deleteContact.fulfilled] (state, action){
-//         state.isLoading = false;
-//         state.error = null;
-//         const idx = state.items.findIndex(contact => contact.id === action.payload.data.id)
-//         state.items.splice(idx, 1)
-
-//       },
-//       [deleteContact.rejected]: handleRejected
-//   }
